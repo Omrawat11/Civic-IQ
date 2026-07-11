@@ -1,97 +1,145 @@
-# CivicIQ — Autonomous Civic Incident Intelligence System
+ <div align="center">
 
-> **Tagline:** "Different complaints. One hidden signal."  
-> **Framing Line:** "Cities don't have a shortage of complaints. They have a shortage of intelligence connecting those complaints."
+# 🏙️ CivicIQ
+### Autonomous Civic Incident Intelligence System
 
-CivicIQ is a multi-agent system designed for municipal operators and citizens to detect, analyze, prioritize, and verify civic infrastructure incidents. By correlating geographical and temporal proximity of independent citizen reports, CivicIQ identifies cascading root-cause failures (e.g., water pipe burst weakening a road base to form potholes that pool water into traffic-blocking waterlogging), automatically assigns resolving departments in sequence, and verifies resolution outcomes with automated GPS and image validation.
+**"Different complaints. One hidden signal."**
+
+*Cities don't have a shortage of complaints. They have a shortage of intelligence connecting those complaints.*
+
+![Python](https://img.shields.io/badge/Python-3.10+-3776AB?logo=python&logoColor=white)
+![Node](https://img.shields.io/badge/Node.js-18+-339933?logo=node.js&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-backend-009688?logo=fastapi&logoColor=white)
+![React](https://img.shields.io/badge/React-frontend-61DAFB?logo=react&logoColor=black)
+![Status](https://img.shields.io/badge/status-demo--ready-brightgreen)
+![License](https://img.shields.io/badge/license-fictional--demo-lightgrey)
+
+</div>
+
+---
+
+## 🎯 What It Does
+
+CivicIQ is a multi-agent system for municipal operators and citizens to **detect, analyze, prioritize, and verify** civic infrastructure incidents — automatically.
+
+By correlating the geographic and temporal proximity of independent citizen reports, CivicIQ uncovers **cascading root-cause failures** that no single complaint would reveal on its own.
+
+> **Example:** A water pipe burst weakens a road base → potholes form → potholes pool water → traffic-blocking waterlogging. Four separate complaints, one root cause. CivicIQ connects the dots, assigns the right departments in the right order, and verifies the fix with photo + GPS validation.
 
 ---
 
 ## 🛠️ Multi-Agent Architecture
 
-CivicIQ operates via a coordinated pipeline of ten specialized backend agents.
+CivicIQ runs a coordinated pipeline of **ten specialized backend agents**, each with a narrow, auditable responsibility.
 
-| Agent | Responsibility | Core Logic |
-| :--- | :--- | :--- |
-| **Perception Agent** | Analyzes photos and text description to detect issue type, severity, and confidence. | Deterministic image lookup table + LLM descriptive evidence synthesis. |
-| **Clustering Agent** | Finds geographically and temporally related reports. | Pure Python Haversine distance (<180m) and time window (<7 days) math. |
-| **Incident Detection Agent** | Analyzes the cluster to determine classification. | Rules: `INDEPENDENT` / `DUPLICATE` / `POSSIBLE_CONNECTED` / `HIGH_CONFIDENCE_CONNECTED` + LLM narrative reasoning. |
-| **Root-Cause Agent** | Traces causal connections between multiple issues. | Walks dependency graph (`civic_dependencies.json`) + LLM explaining the cascade hypothesis. |
-| **Civic Impact Agent** | Scores real-world public threat severity (0-100). | Weighted formula (Severity 30%, Proximity 20%, Impacted 15%, Duration 10%, Repeats 10%, Risks 15%) + LLM explanation. |
-| **Response Agent** | Designates multi-department resolution steps. | Topological sort matching department roles and execution dependencies (`departments.json`). |
-| **Filing Agent** | Generates formal, traceable municipal filings. | Generates `FILE-[INC_ID]` context clearly marked as simulated. |
-| **Escalation Agent** | Tracks SLA deadlines and alerts management. | State machine transitioner checking deadlines + demo-time traveler. |
-| **Verification Agent** | Validates resolution claims via photographic/GPS proof. | Location threshold checking (<100m) + new incoming complaints monitor. |
-| **Orchestrator** | Coordinates state transitions of `IncidentContext`. | Writes and persists updates to shared state `incidents.json`. |
+| # | Agent | Responsibility | Core Logic |
+| :-: | :--- | :--- | :--- |
+| 1 | 👁️ **Perception** | Detects issue type, severity, confidence from photo + text | Deterministic image lookup + LLM evidence synthesis |
+| 2 | 📍 **Clustering** | Finds geographically/temporally related reports | Haversine distance (<180m) + time window (<7 days) |
+| 3 | 🔍 **Incident Detection** | Classifies the cluster | `INDEPENDENT` / `DUPLICATE` / `POSSIBLE_CONNECTED` / `HIGH_CONFIDENCE_CONNECTED` + LLM reasoning |
+| 4 | 🕸️ **Root-Cause** | Traces causal chains between issues | Dependency graph walk (`civic_dependencies.json`) + LLM cascade hypothesis |
+| 5 | ⚠️ **Civic Impact** | Scores public threat severity (0–100) | Weighted formula: Severity 30% · Proximity 20% · Impacted 15% · Duration 10% · Repeats 10% · Risks 15% |
+| 6 | 🏛️ **Response** | Sequences multi-department resolution | Topological sort over roles/dependencies (`departments.json`) |
+| 7 | 📄 **Filing** | Generates formal, traceable municipal filings | `FILE-[INC_ID]` records, clearly marked simulated |
+| 8 | ⏰ **Escalation** | Tracks SLA deadlines, alerts management | State machine + demo time-travel |
+| 9 | ✅ **Verification** | Validates resolution via photo/GPS proof | Location threshold (<100m) + new-complaint monitor |
+| 10 | 🧭 **Orchestrator** | Coordinates state across all agents | Persists shared state to `incidents.json` |
+
+<details>
+<summary><strong>💡 Why ten agents instead of one big model?</strong></summary>
+
+<br>
+
+Each agent is small, deterministic where possible, and independently testable. This means:
+- **Zero demo latency** — no waiting on flaky vision models mid-presentation
+- **Auditability** — every decision traces back to explicit rules or a specific LLM call
+- **Graceful degradation** — no API key? The system falls back to deterministic mock narratives automatically
+
+</details>
 
 ---
 
 ## 🚀 Setup & Execution
 
 ### Prerequisites
-- Python 3.10+
-- Node.js 18+
-- Anthropic API Key (Optional. If not set, system automatically falls back to deterministic mock narratives for 100% stable presentation/offline mode).
 
-### 1. Backend Setup
+| Requirement | Version | Notes |
+|---|---|---|
+| Python | 3.10+ | Backend runtime |
+| Node.js | 18+ | Frontend runtime |
+| Anthropic API Key | Optional | Falls back to deterministic mock narratives — 100% stable offline demo mode |
+
+### 1️⃣ Backend Setup
+
 ```bash
 cd backend
 python -m venv venv
-# On Windows
+
+# Windows
 .\venv\Scripts\activate
-# On macOS/Linux
+# macOS/Linux
 source venv/bin/activate
 
 pip install -r requirements.txt
 ```
 
-Create a `.env` file in the root folder (or `backend/` folder) containing:
+Create a `.env` file in the root or `backend/` folder:
+
 ```env
 GEMINI_API_KEY=your_api_key_here
 ```
 
-Generate seed data:
+Seed the demo data and launch the API:
+
 ```bash
 python -m backend.scripts.seed_data
-```
-
-Start the FastAPI server:
-```bash
 python -m uvicorn main:app --host 0.0.0.0 --port 8000
 ```
 
-### 2. Frontend Setup
-Open a separate terminal window:
+### 2️⃣ Frontend Setup
+
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
-Navigate to `http://localhost:5173`.
+
+Then open **http://localhost:5173** 🎉
 
 ---
 
-## 🎯 Rehearsed Live Demo Script
+## 🎬 Rehearsed Live Demo Script
 
-Follow this script step-by-step for a successful demonstration:
+A step-by-step walkthrough for a smooth, reliable presentation.
 
-1. **Submit Initial Report**: Go to the **Submit Report** page. Select the seed image **`leak_01.jpg`** (Water Leakage near Chakala Junction). Click **Submit Complaint Report**.
-2. **Launch Agent Analysis**: Click **Go to Dashboard and Analyze**.
-3. **Analyze Pipeline**: On the Dashboard, find `CIV-2026-1001` in the *Citizen Reports Feed*. Click **Run Agentic AI**. The live *Agent Pipeline* will animate through the 7 stages of perception, clustering (finding 6 related complaints), detection, root cause, impact, response, and filing.
-4. **Inspect Root Cause & Priority**:
-   - The Root Cause card displays the cascade hypothesis with the required disclaimer: **"AI-generated civic incident hypothesis. Physical inspection recommended."**
-   - The Civic Impact gauge displays **CRITICAL** (88/100) priority.
-5. **Approve Multi-Department Plan**: Scroll down to the *Response Plan*. Inspect the sequenced steps (Water Board first, then Drainage, and Roads Department last). Click **Approve Multi-Department Plan** to transition status to `ACTION_IN_PROGRESS`.
-6. **Submit Mismatched Resolution (Beat 1)**: In the *Resolution Verification* card, select **`resolved_leak_wrong.jpg`** (a garbage overflow image) and click **Submit and Verify**. The Verification Agent returns **`LOCATION_MISMATCH`** with a low confidence score, refusing to close the ticket.
-7. **Submit Correct Resolution (Beat 2)**: Select **`resolved_leak_correct.jpg`** (dry patched road at Chakala) and click **Submit and Verify**. The Verification Agent confirms **`RESOLUTION_VERIFIED`** and transitions status to **RESOLVED**, reducing impact level to **LOW**.
-8. **Advance SLA Escalation**: Go to another scenario or reset. Advance time by clicking **Advance Time (+3 Days)** to trigger the SLA monitor. Notice the incident status changing to **ESCALATED** with a detailed SLA breach notification.
+| Step | Action | Expected Result |
+|:-:|---|---|
+| **1** | Go to **Submit Report** → select seed image `leak_01.jpg` (Water Leakage, Chakala Junction) → **Submit Complaint Report** | Report `CIV-2026-1001` created |
+| **2** | Click **Go to Dashboard and Analyze** | Dashboard loads with new report visible |
+| **3** | Find `CIV-2026-1001` in the *Citizen Reports Feed* → click **Run Agentic AI** | Live pipeline animates through 7 stages: perception → clustering (6 related complaints found) → detection → root cause → impact → response → filing |
+| **4** | Inspect **Root Cause** card | Cascade hypothesis shown with disclaimer: *"AI-generated civic incident hypothesis. Physical inspection recommended."* |
+| | Inspect **Civic Impact** gauge | Shows **CRITICAL (88/100)** |
+| **5** | Scroll to **Response Plan** → review sequence (Water Board → Drainage → Roads) → **Approve Multi-Department Plan** | Status transitions to `ACTION_IN_PROGRESS` |
+| **6** | *(Beat 1)* In **Resolution Verification**, submit `resolved_leak_wrong.jpg` (garbage overflow photo) | Verification Agent returns `LOCATION_MISMATCH` — ticket stays open |
+| **7** | *(Beat 2)* Submit `resolved_leak_correct.jpg` (dry patched road, Chakala) | Verification Agent returns `RESOLUTION_VERIFIED` → status becomes **RESOLVED**, impact drops to **LOW** |
+| **8** | On another scenario, click **Advance Time (+3 Days)** | SLA monitor triggers → status changes to **ESCALATED** with breach notification |
+
+> 🎥 **Presenter tip:** Beats 6–7 are the emotional core of the demo — the system *refuses* a wrong photo before accepting the right one. Let that moment breathe.
 
 ---
 
-## ⚖️ MVP vs Stretch Scope
+## ⚖️ MVP vs. Stretch Scope
 
-- **Vision Core (MVP):** Swapped live vision models for deterministic lookups for issue categories to ensure zero demo latency and 100% stable presentation, while utilizing Claude to synthesize evidence text on top.
-- **Hindi Localization (Stretch):** Cut for time to focus on solid multi-agent coordination visuals.
-- **Full Escalation Ladder (Stretch):** Replaced with a single-tier manager alert system.
+| Feature | Status | Rationale |
+|---|:-:|---|
+| Vision Core | ✅ **MVP (shipped)** | Swapped live vision models for deterministic lookups to guarantee zero demo latency and 100% stable presentation, while Claude synthesizes the evidence narrative on top |
+| Hindi Localization | ✂️ **Cut** | Deprioritized to focus engineering time on solid multi-agent coordination visuals |
+| Full Escalation Ladder | 🔻 **Reduced** | Replaced with a single-tier manager alert system for MVP scope |
 
-*Disclaimer: Fictional demonstration system. Fictional city wards. Synthetic citizen data.*
+---
+
+<div align="center">
+
+*Fictional demonstration system · Fictional city wards · Synthetic citizen data*
+
+</div>
