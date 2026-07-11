@@ -121,10 +121,10 @@
       },
       "description": "The main drain in Tilak Nagar market area is completely blocked. I can see plastic waste and construction debris clogging the drain mouth. Water is already starting to accumulate on the road even without rain.",
       "image_filename": "drain_01.jpg",
-      "status": "SUBMITTED",
+      "status": "LINKED_TO_INCIDENT",
       "ward": "Ward 6 - Kurla",
       "scenario_id": 2,
-      "linked_incident_id": null
+      "linked_incident_id": "INC-2026-002"
     },
     {
       "report_id": "CIV-2026-1008",
@@ -139,10 +139,10 @@
       },
       "description": "Heavy waterlogging behind Tilak Nagar market. The blocked drain is causing all the water to stay on the road. Shopkeepers are unable to open their shops. Water is entering ground floor homes.",
       "image_filename": "waterlogging_02.jpg",
-      "status": "SUBMITTED",
+      "status": "LINKED_TO_INCIDENT",
       "ward": "Ward 6 - Kurla",
       "scenario_id": 2,
-      "linked_incident_id": null
+      "linked_incident_id": "INC-2026-002"
     },
     {
       "report_id": "CIV-2026-1009",
@@ -157,10 +157,10 @@
       },
       "description": "Garbage is piling up near the blocked drain. The collection truck has not come for 3 days. The waterlogging is mixing with the garbage creating a terrible smell. Health hazard for residents.",
       "image_filename": "garbage_01.jpg",
-      "status": "SUBMITTED",
+      "status": "LINKED_TO_INCIDENT",
       "ward": "Ward 6 - Kurla",
       "scenario_id": 2,
-      "linked_incident_id": null
+      "linked_incident_id": "INC-2026-002"
     },
     {
       "report_id": "CIV-2026-1010",
@@ -175,10 +175,10 @@
       },
       "description": "Another drain near the bus stop is also getting blocked now. The garbage from the waterlogged area is floating and entering this drain too. Situation is getting worse every day.",
       "image_filename": "drain_02.jpg",
-      "status": "SUBMITTED",
+      "status": "LINKED_TO_INCIDENT",
       "ward": "Ward 6 - Kurla",
       "scenario_id": 2,
-      "linked_incident_id": null
+      "linked_incident_id": "INC-2026-002"
     },
     {
       "report_id": "CIV-2026-1011",
@@ -193,10 +193,10 @@
       },
       "description": "Stagnant water on Tilak Nagar main road for the 3rd day. It is turning green and mosquitoes are breeding. Children in the area are falling sick. Dengue risk is very high. Please take action immediately.",
       "image_filename": "waterlogging_03.jpg",
-      "status": "SUBMITTED",
+      "status": "LINKED_TO_INCIDENT",
       "ward": "Ward 6 - Kurla",
       "scenario_id": 2,
-      "linked_incident_id": null
+      "linked_incident_id": "INC-2026-002"
     },
     {
       "report_id": "CIV-2026-1012",
@@ -211,7 +211,7 @@
       },
       "description": "URGENT: There are exposed electrical wires hanging from a broken pole right next to St. Xavier's School gate. Children walk past this every morning. One wire is almost touching the ground. This is extremely dangerous, especially during rain. Someone could die.",
       "image_filename": "exposed_wire_01.jpg",
-      "status": "SUBMITTED",
+      "status": "UNDER_REVIEW",
       "ward": "Ward 3 - Marine Lines",
       "scenario_id": 3,
       "linked_incident_id": null
@@ -229,7 +229,7 @@
       },
       "description": "Broken streetlight on School Lane has exposed wires. The insulation has completely worn off. This is right on the path children use to go to school. With monsoon approaching, live wires and water is a deadly combination. Needs emergency response.",
       "image_filename": "exposed_wire_02.jpg",
-      "status": "SUBMITTED",
+      "status": "UNDER_REVIEW",
       "ward": "Ward 3 - Marine Lines",
       "scenario_id": 3,
       "linked_incident_id": null
@@ -265,7 +265,7 @@
       },
       "description": "The pothole on Hill Road I reported 5 days ago has not been fixed. It is now even deeper. Today a delivery boy on a bike fell and fractured his hand. How many injuries will it take before action is taken?",
       "image_filename": "pothole_03.jpg",
-      "status": "SUBMITTED",
+      "status": "UNDER_REVIEW",
       "ward": "Ward 5 - Bandra West",
       "scenario_id": 4,
       "linked_incident_id": null
@@ -319,10 +319,10 @@
       "description": "Streetlight not working on SBS Road near Regal Cinema. The entire stretch is dark at night. Unsafe for women and elderly pedestrians.",
       "image_filename": "streetlight_01.jpg",
       "ward": "Ward 1 - Colaba",
-      "status": "LINKED_TO_INCIDENT",
+      "status": "SUBMITTED",
       "phone": "+91-98200-10018",
       "scenario_id": null,
-      "linked_incident_id": "INC-2026-002"
+      "linked_incident_id": null
     },
     {
       "report_id": "CIV-2026-1019",
@@ -337,10 +337,10 @@
       "description": "Garbage bins overflowing at Colaba Market. Stray dogs tearing through the bags. Waste scattered on the road. Needs daily collection, not alternate days.",
       "image_filename": "garbage_02.jpg",
       "ward": "Ward 1 - Colaba",
-      "status": "LINKED_TO_INCIDENT",
+      "status": "SUBMITTED",
       "phone": "+91-98200-10019",
       "scenario_id": null,
-      "linked_incident_id": "INC-2026-002"
+      "linked_incident_id": null
     },
     {
       "report_id": "CIV-2026-1020",
@@ -445,10 +445,10 @@
       "description": "Waterlogging near Kurla bus depot. Buses unable to enter the depot. Passengers wading through knee-deep water to reach buses.",
       "image_filename": "waterlogging_04.jpg",
       "ward": "Ward 6 - Kurla",
-      "status": "SUBMITTED",
+      "status": "LINKED_TO_INCIDENT",
       "phone": "+91-98200-10025",
       "scenario_id": null,
-      "linked_incident_id": null
+      "linked_incident_id": "INC-2026-004"
     },
     {
       "report_id": "CIV-2026-1026",
@@ -571,10 +571,10 @@
       "description": "Road damaged on Navy Nagar road. Heavy trucks from nearby construction site breaking the road surface daily. Speed breakers also damaged.",
       "image_filename": "road_damage_04.jpg",
       "ward": "Ward 1 - Colaba",
-      "status": "LINKED_TO_INCIDENT",
+      "status": "SUBMITTED",
       "phone": "+91-98200-10032",
       "scenario_id": null,
-      "linked_incident_id": "INC-2026-002"
+      "linked_incident_id": null
     },
     {
       "report_id": "CIV-2026-1033",
@@ -589,10 +589,10 @@
       "description": "Drain blocked in Kurla East colony. Debris from nearby construction has entered the drain. Water not flowing. Monsoon approaching and this will cause flooding.",
       "image_filename": "drain_03.jpg",
       "ward": "Ward 6 - Kurla",
-      "status": "SUBMITTED",
+      "status": "LINKED_TO_INCIDENT",
       "phone": "+91-98200-10033",
       "scenario_id": null,
-      "linked_incident_id": null
+      "linked_incident_id": "INC-2026-004"
     },
     {
       "report_id": "CIV-2026-1034",
@@ -902,22 +902,40 @@
     },
     {
       "report_id": "CIV-2026-1051",
-      "timestamp": "2026-07-11T00:46:15.040180+05:30",
-      "citizen_name": "om",
-      "phone": "+91-98200-11111",
+      "timestamp": "2026-07-11T11:01:11.371985+05:30",
+      "citizen_name": "John wick",
+      "phone": "+91 94642-51814",
       "location": {
-        "latitude": 42.531,
-        "longitude": 72.842,
-        "address": "indrapuri",
+        "latitude": -6.238224,
+        "longitude": 106.995565,
+        "address": "Current Location",
         "ward": "Ward 1 - Municipal General"
       },
-      "description": "a broken road ",
-      "image_filename": "report_1ebe2fa7.webp",
+      "description": "there is a pot hole in my colony people facing the problem ",
+      "image_filename": "report_51d05070.webp",
+      "status": "UNDER_REVIEW",
+      "linked_incident_id": null,
+      "ward": "Ward 1 - Municipal General",
+      "scenario_id": null
+    },
+    {
+      "report_id": "CIV-2026-1052",
+      "timestamp": "2026-07-11T11:14:47.317595+05:30",
+      "citizen_name": "Anonymous",
+      "phone": "+91-98200-11111",
+      "location": {
+        "latitude": 23.2491,
+        "longitude": 77.4764,
+        "address": "Current Location",
+        "ward": "Ward 1 - Municipal General"
+      },
+      "description": "there is a pot hole near my house people facing the porblem",
+      "image_filename": "report_bf880ba0.webp",
       "status": "UNDER_REVIEW",
       "linked_incident_id": null,
       "ward": "Ward 1 - Municipal General",
       "scenario_id": null
     }
   ],
-  "total": 51
+  "total": 52
 }
