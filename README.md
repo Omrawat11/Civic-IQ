@@ -67,7 +67,7 @@ Each agent is small, deterministic where possible, and independently testable. T
 |---|---|---|
 | Python | 3.10+ | Backend runtime |
 | Node.js | 18+ | Frontend runtime |
-| Anthropic API Key | Optional | Falls back to deterministic mock narratives — 100% stable offline demo mode |
+| Groq API Key | Optional | Falls back to deterministic mock narratives — 100% stable offline demo mode |
 
 ### 1️⃣ Backend Setup
 
@@ -86,7 +86,7 @@ pip install -r requirements.txt
 Create a `.env` file in the root or `backend/` folder:
 
 ```env
-GEMINI_API_KEY=your_api_key_here
+GROQ_API_KEY=your_api_key_here
 ```
 
 Seed the demo data and launch the API:
@@ -132,7 +132,7 @@ A step-by-step walkthrough for a smooth, reliable presentation.
 
 | Feature | Status | Rationale |
 |---|:-:|---|
-| Vision Core | ✅ **MVP (shipped)** | Swapped live vision models for deterministic lookups to guarantee zero demo latency and 100% stable presentation, while Claude synthesizes the evidence narrative on top |
+| Vision Core | ✅ **MVP (shipped)** | Swapped live vision models for deterministic lookups to guarantee zero demo latency and 100% stable presentation, while Groq LLM synthesizes the evidence narrative on top |
 | Hindi Localization | ✂️ **Cut** | Deprioritized to focus engineering time on solid multi-agent coordination visuals |
 | Full Escalation Ladder | 🔻 **Reduced** | Replaced with a single-tier manager alert system for MVP scope |
 

@@ -690,7 +690,168 @@
         "original_deadline": "2026-07-12T11:21:36.515158+05:30"
       },
       "agent_log": []
+    },
+    {
+      "incident_id": "INC-2026-005",
+      "status": "UNDER_REVIEW",
+      "classification": "POSSIBLE_CONNECTED_INCIDENT",
+      "created_at": "2026-07-11T11:48:23.957899+05:30",
+      "updated_at": "2026-07-11T11:48:23.957917+05:30",
+      "connected_reports": [
+        "CIV-2026-1018",
+        "CIV-2026-1019",
+        "CIV-2026-1032"
+      ],
+      "cluster": {
+        "radius_m": 76.5,
+        "time_window_days": 7,
+        "center_lat": 19.025499999999997,
+        "center_lon": 72.8355,
+        "report_count": 3
+      },
+      "perception_results": [
+        {
+          "report_id": "CIV-2026-1018",
+          "issue_type": "BROKEN_STREETLIGHT",
+          "severity": "MEDIUM",
+          "confidence": 0.87,
+          "evidence_text": "Non-functional streetlight on main road. Lamp housing intact but no illumination. Likely electrical supply or bulb failure. Dark stretch creates safety concern.",
+          "image_filename": "streetlight_01.jpg",
+          "visual_evidence": [
+            "Observed defect matching category: broken streetlight",
+            "Observed severity level assessed as medium",
+            "Visual validation matches known demographic seeds"
+          ]
+        },
+        {
+          "report_id": "CIV-2026-1019",
+          "issue_type": "GARBAGE_OVERFLOW",
+          "severity": "MEDIUM",
+          "confidence": 0.84,
+          "evidence_text": "Multiple bins overflowing in market area. Waste bags torn by animals. Scattered waste on road surface. Collection schedule appears inadequate.",
+          "image_filename": "garbage_02.jpg",
+          "visual_evidence": [
+            "Observed defect matching category: garbage overflow",
+            "Observed severity level assessed as medium",
+            "Visual validation matches known demographic seeds"
+          ]
+        },
+        {
+          "report_id": "CIV-2026-1032",
+          "issue_type": "ROAD_DAMAGE",
+          "severity": "HIGH",
+          "confidence": 0.87,
+          "evidence_text": "Severe road surface damage with displaced speed breakers. Evidence of heavy vehicle impact on weakened road base. Multiple potholes forming in the damaged stretch.",
+          "image_filename": "road_damage_04.jpg",
+          "visual_evidence": [
+            "Observed defect matching category: road damage",
+            "Observed severity level assessed as high",
+            "Visual validation matches known demographic seeds"
+          ]
+        }
+      ],
+      "root_cause": {
+        "hypothesis": "Root cause analysis identifies a cascading infrastructure failure: GARBAGE_OVERFLOW -> DRAIN_BLOCKAGE -> WATERLOGGING -> ROAD_DAMAGE. The evidence suggests that GARBAGE_OVERFLOW triggered a chain of downstream effects through Root cause, Loose garbage enters and blocks nearby drain inlets. This cascade pattern is consistent with 3 distinct issue types observed within a concentrated geographic area.",
+        "confidence": 0.31,
+        "evidence": [
+          "Root cause",
+          "Loose garbage enters and blocks nearby drain inlets",
+          "Blocked drains prevent water outflow causing surface accumulation",
+          "Standing water penetrates road layers causing structural weakness"
+        ],
+        "chain": [
+          "GARBAGE_OVERFLOW",
+          "DRAIN_BLOCKAGE",
+          "WATERLOGGING",
+          "ROAD_DAMAGE"
+        ],
+        "disclaimer": "AI-generated civic incident hypothesis. Physical inspection recommended."
+      },
+      "impact_score": {
+        "score": 73.0,
+        "priority": "HIGH",
+        "breakdown": {
+          "severity_score": 80,
+          "infrastructure_proximity": 85,
+          "people_affected": 75,
+          "duration": 50,
+          "repeat_reports": 60,
+          "secondary_risk": 65
+        },
+        "explanation": "Impact score of 73.0/100 classified as HIGH. Key factors: severity at 80/100, infrastructure proximity at 85/100, and secondary risk at 65/100. The cascading nature of 3 interconnected issue types over 2.6 days significantly elevates the overall impact."
+      },
+      "response_plan": {
+        "steps": [
+          {
+            "step_number": 1,
+            "department": "SOLID_WASTE_MGMT",
+            "department_name": "Solid Waste Management Department",
+            "action": "Address GARBAGE_OVERFLOW issues",
+            "reason": "Garbage clearance can proceed independently",
+            "estimated_hours": 24,
+            "depends_on": [],
+            "resources": [
+              "Garbage collection trucks",
+              "Mechanized sweepers",
+              "Bio-hazard cleanup teams",
+              "Waste segregation units"
+            ],
+            "issues": [
+              "GARBAGE_OVERFLOW"
+            ]
+          },
+          {
+            "step_number": 2,
+            "department": "ELECTRICAL_DEPT",
+            "department_name": "Electrical & Street Lighting Department",
+            "action": "Address BROKEN_STREETLIGHT issues",
+            "reason": "Electrical safety is independent and urgent",
+            "estimated_hours": 12,
+            "depends_on": [],
+            "resources": [
+              "Electrical repair crews",
+              "Transformer units",
+              "Insulation equipment",
+              "Emergency power cutoff teams"
+            ],
+            "issues": [
+              "BROKEN_STREETLIGHT"
+            ]
+          },
+          {
+            "step_number": 3,
+            "department": "ROADS_DEPT",
+            "department_name": "Roads & Infrastructure Department",
+            "action": "Address ROAD_DAMAGE issues",
+            "reason": "Road repairs are wasted if underlying water/drainage issues persist",
+            "estimated_hours": 48,
+            "depends_on": [],
+            "resources": [
+              "Asphalt paving crews",
+              "Road repair machinery",
+              "Traffic management units",
+              "Barricades and signage"
+            ],
+            "issues": [
+              "ROAD_DAMAGE"
+            ]
+          }
+        ],
+        "rationale": "The response plan follows a dependency-ordered sequence to ensure root cause fixes precede downstream repairs. Road repairs are deliberately scheduled after water/drainage fixes because repairing road surfaces over an active water leak would waste resources and require re-work.",
+        "approved": false,
+        "approved_by": "",
+        "approved_at": ""
+      },
+      "resolution": {},
+      "sla": {
+        "deadline": "2026-07-12T11:48:24.040552+05:30",
+        "reminders_sent": 0,
+        "escalated": false,
+        "escalation_reason": "",
+        "original_deadline": "2026-07-12T11:48:24.040552+05:30"
+      },
+      "agent_log": []
     }
   ],
-  "total": 4
+  "total": 5
 }

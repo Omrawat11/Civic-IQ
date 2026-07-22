@@ -319,10 +319,10 @@
       "description": "Streetlight not working on SBS Road near Regal Cinema. The entire stretch is dark at night. Unsafe for women and elderly pedestrians.",
       "image_filename": "streetlight_01.jpg",
       "ward": "Ward 1 - Colaba",
-      "status": "SUBMITTED",
+      "status": "LINKED_TO_INCIDENT",
       "phone": "+91-98200-10018",
       "scenario_id": null,
-      "linked_incident_id": null
+      "linked_incident_id": "INC-2026-005"
     },
     {
       "report_id": "CIV-2026-1019",
@@ -337,10 +337,10 @@
       "description": "Garbage bins overflowing at Colaba Market. Stray dogs tearing through the bags. Waste scattered on the road. Needs daily collection, not alternate days.",
       "image_filename": "garbage_02.jpg",
       "ward": "Ward 1 - Colaba",
-      "status": "SUBMITTED",
+      "status": "LINKED_TO_INCIDENT",
       "phone": "+91-98200-10019",
       "scenario_id": null,
-      "linked_incident_id": null
+      "linked_incident_id": "INC-2026-005"
     },
     {
       "report_id": "CIV-2026-1020",
@@ -571,10 +571,10 @@
       "description": "Road damaged on Navy Nagar road. Heavy trucks from nearby construction site breaking the road surface daily. Speed breakers also damaged.",
       "image_filename": "road_damage_04.jpg",
       "ward": "Ward 1 - Colaba",
-      "status": "SUBMITTED",
+      "status": "LINKED_TO_INCIDENT",
       "phone": "+91-98200-10032",
       "scenario_id": null,
-      "linked_incident_id": null
+      "linked_incident_id": "INC-2026-005"
     },
     {
       "report_id": "CIV-2026-1033",

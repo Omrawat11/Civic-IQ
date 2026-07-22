@@ -1,6 +1,6 @@
 """
 CivicIQ -- Perception Agent
-Integrates Gemini multimodal analysis for uploaded photos,
+Integrates Groq text-based analysis for uploaded photos,
 and deterministic lookup tables for pre-built scenario seed images.
 """
 
@@ -9,7 +9,7 @@ import os
 from typing import Dict, Any, List
 
 from services.ai_service import generate_narrative
-from services.gemini_service import analyze_uploaded_image
+from services.groq_vision_service import analyze_uploaded_image
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR = os.path.join(BASE_DIR, "data")
@@ -28,7 +28,7 @@ async def analyze_report(report: Dict[str, Any]) -> Dict[str, Any]:
     severity, and confidence.
 
     Modes:
-    1. Uploaded Citizen Image: Uses Gemini multimodal model.
+    1. Uploaded Citizen Image: Uses Groq text-based analysis.
     2. Seed Demo Image: Uses deterministic lookup table for 100% demo stability.
 
     Returns:
@@ -54,7 +54,7 @@ async def analyze_report(report: Dict[str, Any]) -> Dict[str, Any]:
         image_path = os.path.join(UPLOADS_REPORTS_DIR, image_filename)
         print(f"[PERCEPTION_AGENT] Performing Multimodal analysis on uploaded image: {image_path}")
         
-        # Analyze using Gemini Multimodal Service
+        # Analyze using Groq Vision Service
         analysis = await analyze_uploaded_image(image_path, description)
         
         issue_type = analysis["issue_type"]

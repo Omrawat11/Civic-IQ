@@ -699,7 +699,100 @@
       "confidence": 1.0,
       "recommended_action": "Track resolution through SLA monitoring",
       "timestamp": "2026-07-11T11:21:36.495174+05:30"
+    },
+    {
+      "agent": "PERCEPTION_AGENT",
+      "decision": "Classified as BROKEN_STREETLIGHT, MEDIUM severity",
+      "evidence_used": [
+        "Image analysis: streetlight_01.jpg",
+        "Citizen report: CIV-2026-1018",
+        "Visual: Observed defect matching category: broken streetlight",
+        "Visual: Observed severity level assessed as medium",
+        "Visual: Visual validation matches known demographic seeds"
+      ],
+      "confidence": 0.87,
+      "recommended_action": "Proceed to clustering for related reports in the area",
+      "timestamp": "2026-07-11T11:48:23.876347+05:30"
+    },
+    {
+      "agent": "CLUSTERING_AGENT",
+      "decision": "Found 2 related reports in cluster",
+      "evidence_used": [
+        "Search radius: 180.0m",
+        "Time window: 7 days",
+        "Center: (19.0255, 72.8355)",
+        "Cluster radius: 76.5m"
+      ],
+      "confidence": 0.7,
+      "recommended_action": "Proceed to incident detection",
+      "timestamp": "2026-07-11T11:48:23.909856+05:30"
+    },
+    {
+      "agent": "INCIDENT_DETECTION_AGENT",
+      "decision": "POSSIBLE_CONNECTED_INCIDENT",
+      "evidence_used": [
+        "Cluster size: 3 reports",
+        "Unique issue types: 3 (GARBAGE_OVERFLOW, BROKEN_STREETLIGHT, ROAD_DAMAGE)",
+        "Same-type reports: 1"
+      ],
+      "confidence": 0.64,
+      "recommended_action": "Create incident and proceed to root cause analysis",
+      "timestamp": "2026-07-11T11:48:23.936001+05:30"
+    },
+    {
+      "agent": "ROOT_CAUSE_AGENT",
+      "decision": "Causal chain: GARBAGE_OVERFLOW -> DRAIN_BLOCKAGE -> WATERLOGGING -> ROAD_DAMAGE",
+      "evidence_used": [
+        "Root cause",
+        "Loose garbage enters and blocks nearby drain inlets",
+        "Blocked drains prevent water outflow causing surface accumulation",
+        "Standing water penetrates road layers causing structural weakness",
+        "3 related reports analyzed",
+        "3 distinct issue types identified"
+      ],
+      "confidence": 0.31,
+      "recommended_action": "Proceed to impact assessment and response planning",
+      "timestamp": "2026-07-11T11:48:23.958760+05:30"
+    },
+    {
+      "agent": "IMPACT_AGENT",
+      "decision": "Impact Score: 73.0/100 - HIGH",
+      "evidence_used": [
+        "Severity: 80",
+        "Proximity: 85",
+        "People affected: 75",
+        "Duration: 50 (2.6 days)",
+        "Repeat reports: 60 (3 reports)",
+        "Secondary risk: 65"
+      ],
+      "confidence": 0.9,
+      "recommended_action": "Schedule response per HIGH priority SLA",
+      "timestamp": "2026-07-11T11:48:23.981037+05:30"
+    },
+    {
+      "agent": "RESPONSE_ORCHESTRATION_AGENT",
+      "decision": "3-step multi-department response plan created",
+      "evidence_used": [
+        "Root cause: GARBAGE_OVERFLOW -> DRAIN_BLOCKAGE -> WATERLOGGING -> ROAD_DAMAGE",
+        "Priority: HIGH",
+        "Departments involved: Solid Waste Management Department, Electrical & Street Lighting Department, Roads & Infrastructure Department"
+      ],
+      "confidence": 0.85,
+      "recommended_action": "REQUIRES HUMAN APPROVAL before execution",
+      "timestamp": "2026-07-11T11:48:24.001273+05:30"
+    },
+    {
+      "agent": "FILING_AGENT",
+      "decision": "Formal complaint filed as FILE-INC-2026-005 (SIMULATED)",
+      "evidence_used": [
+        "Incident: INC-2026-005",
+        "Reports: 3",
+        "Priority: HIGH"
+      ],
+      "confidence": 1.0,
+      "recommended_action": "Track resolution through SLA monitoring",
+      "timestamp": "2026-07-11T11:48:24.020651+05:30"
     }
   ],
-  "total": 54
+  "total": 61
 }

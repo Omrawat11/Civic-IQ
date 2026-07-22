@@ -1,39 +1,42 @@
 """
-CivicIQ -- Gemini Multimodal Service
-Handles image analysis using the google-generativeai SDK.
-Gracefully falls back to deterministic analysis if API key is missing or calls fail.
+CivicIQ -- Groq Vision Service
+Handles image-related analysis for uploaded citizen photos.
+Since Groq does not support multimodal/vision input, this service uses:
+1. Groq text-based analysis on citizen descriptions for richer classification.
+2. Deterministic keyword fallback for guaranteed stability.
 """
 
 import os
 import json
 import re
 from typing import Dict, Any, List
-from PIL import Image
 from dotenv import load_dotenv
 
 load_dotenv()
 
-# Load either GEMINI_API_KEY or GOOGLE_API_KEY
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")
+GROQ_API_KEY = os.getenv("GROQ_API_KEY", "")
 
-_genai_configured = False
+# Primary and fallback models
+PRIMARY_MODEL = "llama-3.3-70b-versatile"
+FALLBACK_MODEL = "llama-3.1-8b-instant"
+
+_client = None
 
 
-def _configure_genai():
-    """Configure google-generativeai if API key is present."""
-    global _genai_configured
-    if _genai_configured:
-        return True
-    if not GEMINI_API_KEY or GEMINI_API_KEY == "your_api_key_here":
-        return False
+def _get_client():
+    """Get or create the Groq client. Returns None if no API key."""
+    global _client
+    if _client is not None:
+        return _client
+    if not GROQ_API_KEY or GROQ_API_KEY == "your_api_key_here":
+        return None
     try:
-        import google.generativeai as genai
-        genai.configure(api_key=GEMINI_API_KEY)
-        _genai_configured = True
-        return True
+        from groq import Groq
+        _client = Groq(api_key=GROQ_API_KEY)
+        return _client
     except Exception as e:
-        print(f"[GEMINI_SERVICE] Failed to configure genai: {e}")
-        return False
+        print(f"[GROQ_VISION_SERVICE] Failed to initialize Groq client: {e}")
+        return None
 
 
 def _clean_json_response(text: str) -> str:
@@ -47,7 +50,13 @@ def _clean_json_response(text: str) -> str:
 
 async def analyze_uploaded_image(image_path: str, citizen_description: str) -> Dict[str, Any]:
     """
-    Analyze an actual uploaded image file using Gemini Multimodal.
+    Analyze an uploaded image file by using Groq text-based analysis
+    on the citizen's description.
+
+    Since Groq does not support multimodal/vision input, this function:
+    1. Attempts text-based classification via Groq LLM using the citizen description.
+    2. Falls back to deterministic keyword-based inference if Groq is unavailable.
+
     Returns:
     {
         "issue_type": "POTHOLE",
@@ -62,25 +71,21 @@ async def analyze_uploaded_image(image_path: str, citizen_description: str) -> D
     """
     fallback_result = _generate_inferred_fallback(citizen_description)
 
-    if not _configure_genai():
-        print("[GEMINI_SERVICE] No Gemini API key configured. Using deterministic fallback.")
+    client = _get_client()
+    if client is None:
+        print("[GROQ_VISION_SERVICE] No Groq API key configured. Using deterministic fallback.")
         return fallback_result
 
     if not os.path.exists(image_path):
-        print(f"[GEMINI_SERVICE] File not found: {image_path}. Using deterministic fallback.")
+        print(f"[GROQ_VISION_SERVICE] File not found: {image_path}. Using deterministic fallback.")
         return fallback_result
 
     try:
-        import google.generativeai as genai
-        
-        # Load PIL image
-        img = Image.open(image_path)
-        
-        # Set up prompt
-        prompt = f"""You are a civic infrastructure analysis AI. Analyze the attached photo of a civic issue.
-The citizen reported this issue with description: "{citizen_description}"
+        prompt = f"""You are a civic infrastructure analysis AI. A citizen has submitted a photo of a civic issue along with the following description:
 
-Based on the image details, classify the issue:
+"{citizen_description}"
+
+Based on this description, classify the issue:
 1. "issue_type": Choose EXACTLY one of these categories:
    - POTHOLE
    - WATER_LEAKAGE
@@ -101,9 +106,9 @@ Based on the image details, classify the issue:
 
 3. "confidence": Estimate confidence as a decimal number between 0.0 and 1.0 (e.g. 0.85).
 
-4. "visual_evidence": Provide exactly 3 short, concrete visual observations. Describe only what is physically visible in the photo. Do not speculate on subterranean causes or administrative issues.
+4. "visual_evidence": Provide exactly 3 short, concrete observations that would be expected based on the description. Describe only what would be physically visible. Do not speculate on subterranean causes or administrative issues.
 
-You MUST return a JSON object conforming exactly to this structure:
+You MUST return ONLY a valid JSON object with NO additional text, conforming exactly to this structure:
 {{
     "issue_type": "POTHOLE",
     "severity": "HIGH",
@@ -113,40 +118,62 @@ You MUST return a JSON object conforming exactly to this structure:
         "visible road cavity",
         "water accumulation near damaged area"
     ]
-}}
-"""
-        model = genai.GenerativeModel("gemini-1.5-flash")
-        
-        # Call Gemini model
-        response = model.generate_content([prompt, img])
-        
-        # Parse output
-        raw_text = response.text
-        cleaned_text = _clean_json_response(raw_text)
-        data = json.loads(cleaned_text)
-        
-        # Validate keys
-        required_keys = ["issue_type", "severity", "confidence", "visual_evidence"]
-        if all(k in data for k in required_keys):
-            return {
-                "issue_type": str(data["issue_type"]).upper(),
-                "severity": str(data["severity"]).upper(),
-                "confidence": float(data["confidence"]),
-                "visual_evidence": list(data["visual_evidence"])[:3],
-            }
-        else:
-            print("[GEMINI_SERVICE] Returned JSON was missing keys. Using fallback.")
-            return fallback_result
+}}"""
+
+        # Try primary model, then fallback
+        for model in [PRIMARY_MODEL, FALLBACK_MODEL]:
+            try:
+                response = client.chat.completions.create(
+                    model=model,
+                    max_tokens=400,
+                    temperature=0.2,
+                    messages=[
+                        {"role": "system", "content": "You are a civic infrastructure analysis AI. Respond with valid JSON only."},
+                        {"role": "user", "content": prompt},
+                    ],
+                )
+
+                raw_text = response.choices[0].message.content
+                cleaned_text = _clean_json_response(raw_text)
+                data = json.loads(cleaned_text)
+
+                # Validate keys
+                required_keys = ["issue_type", "severity", "confidence", "visual_evidence"]
+                if all(k in data for k in required_keys):
+                    return {
+                        "issue_type": str(data["issue_type"]).upper(),
+                        "severity": str(data["severity"]).upper(),
+                        "confidence": float(data["confidence"]),
+                        "visual_evidence": list(data["visual_evidence"])[:3],
+                    }
+                else:
+                    print(f"[GROQ_VISION_SERVICE] Returned JSON was missing keys ({model}). Trying next model.")
+                    continue
+
+            except json.JSONDecodeError as e:
+                print(f"[GROQ_VISION_SERVICE] Invalid JSON from {model}: {e}. Trying next model.")
+                continue
+            except Exception as e:
+                error_msg = str(e).lower()
+                if "model" in error_msg or "not found" in error_msg or "unavailable" in error_msg:
+                    print(f"[GROQ_VISION_SERVICE] Model {model} unavailable: {e}. Trying next model.")
+                    continue
+                print(f"[GROQ_VISION_SERVICE] API call failed ({model}): {e}. Using fallback.")
+                return fallback_result
+
+        # Both models failed to produce valid output
+        print("[GROQ_VISION_SERVICE] All models failed. Using deterministic fallback.")
+        return fallback_result
 
     except Exception as e:
-        print(f"[GEMINI_SERVICE] Multimodal analysis call failed: {e}. Using fallback.")
+        print(f"[GROQ_VISION_SERVICE] Analysis call failed: {e}. Using fallback.")
         return fallback_result
 
 
 def _generate_inferred_fallback(description: str) -> Dict[str, Any]:
     """Infers issue type, severity, and visual evidence from description for high-fidelity fallback."""
     desc_lower = description.lower()
-    
+
     keyword_map = [
         (["water leak", "pipe leak", "pipe burst", "water flowing", "water seep"], "WATER_LEAKAGE", "HIGH", [
             "visible stream of water flowing on road surface",
